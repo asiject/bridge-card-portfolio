@@ -1,0 +1,8 @@
+# 포트폴리오용 sanitized 레포
+# asiject/bridge-card-portfolio 로 별도 push
+
+node_modules
+dist
+.vercel
+*.tsbuildinfo
+.DS_Store
