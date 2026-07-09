@@ -26,8 +26,8 @@ export const useCardShuffle = () => {
       flippedElements.forEach((element) => {
         element.classList.add('flipping')
         element.classList.remove('card-front', 'completed')
-        const img = element.querySelector('img')
-        if (img) img.remove()
+        const cardFace = element.querySelector('.card-face')
+        if (cardFace) cardFace.remove()
       })
 
       setTimeout(() => {

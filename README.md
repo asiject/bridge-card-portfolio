@@ -21,7 +21,7 @@
 
 | 영역 | 설명 |
 |------|------|
-| 카드 게임 UI | 16장 질문 카드 선택 · 제거 · 풀스크린 보기 |
+| 카드 게임 UI | 16장 질문 카드 선택 · 제거 · 풀스크린 보기 (텍스트 JSON) |
 | 게임 로직 | 라이트/딥 모드, 타이머, Fisher-Yates 셔플, 2단계 대화 |
 | 다국어 | 한국어 / English |
 | 서버 기능 | 리뷰 API → Mock Modal (서버 불필요) |
@@ -118,6 +118,7 @@ bridge-card-portfolio/
 | 항목 | 원본 (회사 서비스) | 포트폴리오 버전 |
 |------|-------------------|----------------|
 | 프레임워크 | Vue 2 + jQuery | Vue 3 + TypeScript |
+| 카드 콘텐츠 | 상품 PNG (저작권) | JSON 질문 + CSS 카드 UI |
 | 스타일 | custom CSS | Tailwind CSS |
 | 리뷰 기능 | REST API 연동 | Mock Modal |
 | 배포 | 회사 서버 | Vercel |

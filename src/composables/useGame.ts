@@ -6,7 +6,7 @@ import type {
   Language,
   MockModalType,
 } from '@/types/game'
-import { CARD_DATA } from '@/data/cardData'
+import { CARD_DATA, remapDeckLanguage } from '@/data/cardData'
 import { MESSAGES } from '@/data/messages'
 import { GAME_CONFIG } from '@/constants/gameConfig'
 import { detectLanguage, getHtmlLang, setLanguage } from '@/utils/language'
@@ -135,13 +135,8 @@ export const useGame = () => {
     currentLanguage.value = language
     applyDocumentLanguage(language)
 
-    const images = [
-      ...CARD_DATA[language].light.map((card) => card.img),
-      ...CARD_DATA[language].deep.map((card) => card.img),
-    ]
-    preloadImages(images).catch(() => undefined)
-
     if (gamePhase.value === 'playing') {
+      deck.value = remapDeckLanguage(deck.value, language, mode.value)
       runShuffleAnimation()
     }
   }
@@ -196,9 +191,6 @@ export const useGame = () => {
     document.addEventListener('keydown', handleKeydown)
 
     const images = [
-      ...currentCardData.value.light.map((card) => card.img),
-      ...currentCardData.value.deep.map((card) => card.img),
-      '/img/bridge_back.png',
       '/img/logo.png',
       '/img/timer-green.png',
       '/img/timer-pink.png',

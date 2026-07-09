@@ -36,6 +36,7 @@ export const MESSAGES: Record<Language, MessageSet> = {
     mockReviewTitle: '포트폴리오 데모',
     mockReviewDesc:
       '리뷰 작성/조회 기능은 원본 서비스에서 REST API로 제공되었습니다. 현재 포트폴리오 버전에서는 서버 없이 동작하도록 Mock 처리되었습니다.',
+    cardBackLabel: '카드',
   },
   en: {
     gameTitle: 'Bridge Card Game',
@@ -72,5 +73,6 @@ export const MESSAGES: Record<Language, MessageSet> = {
     mockReviewTitle: 'Portfolio Demo',
     mockReviewDesc:
       'Review features were powered by a REST API in the original service. This portfolio version runs without a server and uses a mock placeholder instead.',
+    cardBackLabel: 'Card',
   },
 }

@@ -14,20 +14,19 @@
   transform-style: preserve-3d;
 }
 
-.card-grid .card-back {
-  background: url('/img/bridge_back.png') no-repeat center;
-  background-size: cover;
+/* 카드 뒷면 — 저작권-free CSS 패턴 */
+.theme-light .card-grid .card-back .card-back-face {
+  @apply bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900;
 }
 
-.card-grid .card-back::after {
+.theme-deep .card-grid .card-back .card-back-face {
+  @apply bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900;
+}
+
+.card-grid .card-back .card-back-face::after {
   content: '';
-  @apply absolute inset-0 rounded-xl;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 70%
-  );
+  @apply absolute inset-0 rounded-xl opacity-20;
+  background: radial-gradient(circle at 30% 30%, white 0%, transparent 60%);
 }
 
 .card-grid .card.flipping {

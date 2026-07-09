@@ -135,6 +135,8 @@ const handleOpenReviewWrite = () => {
         <main class="py-4">
           <CardGrid
             :deck="deck"
+            :mode="mode"
+            :card-back-label="messages.cardBackLabel"
             :is-shuffling="isShuffling"
             :is-card-focused="isCardFocused"
             :selected-card-id="selectedCard?.id ?? null"
@@ -149,6 +151,7 @@ const handleOpenReviewWrite = () => {
       <CardModal
         v-if="selectedCard"
         :card="selectedCard"
+        :mode="mode"
         :messages="messages"
         @close="closeCard"
       />

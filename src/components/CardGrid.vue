@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { Card } from '@/types/game'
+import type { Card, GameMode } from '@/types/game'
+import CardFace from '@/components/CardFace.vue'
 
 defineProps<{
   deck: Card[]
+  mode: GameMode
   isShuffling: boolean
   isCardFocused: boolean
   selectedCardId: number | null
+  cardBackLabel: string
   isFlipped: (cardId: number) => boolean
 }>()
 
@@ -30,7 +33,7 @@ const emit = defineEmits<{
       :data-card-id="card.id"
       role="button"
       tabindex="0"
-      :aria-label="`카드 ${index + 1}`"
+      :aria-label="`${cardBackLabel} ${index + 1}`"
       @click="emit('cardClick', card)"
       @keydown.enter="emit('cardClick', card)"
     >
@@ -39,13 +42,16 @@ const emit = defineEmits<{
       >
         {{ index + 1 }}
       </span>
-      <img
-        v-if="isFlipped(card.id)"
-        :src="card.img"
-        :alt="`카드 ${index + 1}`"
-        class="absolute inset-0 h-full w-full rounded-xl object-cover"
-        loading="lazy"
-      />
+
+      <CardFace v-if="isFlipped(card.id)" :card="card" :mode="mode" size="grid" />
+
+      <div
+        v-else
+        class="card-back-face absolute inset-0 flex items-center justify-center rounded-xl"
+        aria-hidden="true"
+      >
+        <span class="text-3xl opacity-80 sm:text-4xl">🌉</span>
+      </div>
     </li>
   </ul>
 </template>

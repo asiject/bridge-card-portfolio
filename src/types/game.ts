@@ -6,9 +6,18 @@ export type GamePhase = 'splash' | 'guide' | 'playing'
 
 export type MockModalType = 'review-write' | 'review-board' | null
 
+/** 텍스트 기반 질문 카드 */
 export interface Card {
   id: number
-  img: string
+  icon: string
+  question: string
+  subQuestion: string
+}
+
+export interface QuestionItem {
+  icon: string
+  question: string
+  subQuestion: string
 }
 
 export interface MessageSet {
@@ -45,4 +54,5 @@ export interface MessageSet {
   start: string
   mockReviewTitle: string
   mockReviewDesc: string
+  cardBackLabel: string
 }

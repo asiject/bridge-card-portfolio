@@ -1,40 +1,44 @@
-import type { Card, Language } from '@/types/game'
+import { QUESTIONS } from '@/data/questions'
+import type { Card, GameMode, Language } from '@/types/game'
 
-const createCardSet = (prefix: string, modeSuffix: string): Card[] => {
-  const baseCards = Array.from({ length: 8 }, (_, index) => ({
+/** 언어·모드별 16장 덱 생성 (공통 8 + 모드 전용 8) */
+const buildDeck = (language: Language, mode: GameMode): Card[] => {
+  const baseItems = QUESTIONS.base[language]
+  const modeItems = QUESTIONS[mode][language]
+
+  const baseCards: Card[] = baseItems.map((item, index) => ({
     id: index + 1,
-    img: `/img/${prefix}_bridge_${index + 1}.png`,
+    ...item,
   }))
 
-  const modeCards = Array.from({ length: 8 }, (_, index) => ({
+  const modeCards: Card[] = modeItems.map((item, index) => ({
     id: index + 9,
-    img: `/img/${prefix}_bridge_${modeSuffix}_${index + 1}.png`,
+    ...item,
   }))
 
   return [...baseCards, ...modeCards]
 }
 
-const createEnglishCardSet = (modeSuffix: string): Card[] => {
-  const baseCards = Array.from({ length: 8 }, (_, index) => ({
-    id: index + 1,
-    img: `/img/bridge_${index + 1}.png`,
-  }))
-
-  const modeCards = Array.from({ length: 8 }, (_, index) => ({
-    id: index + 9,
-    img: `/img/bridge_${modeSuffix}_${index + 1}.png`,
-  }))
-
-  return [...baseCards, ...modeCards]
-}
-
-export const CARD_DATA: Record<Language, { light: Card[]; deep: Card[] }> = {
+export const CARD_DATA: Record<Language, Record<GameMode, Card[]>> = {
   kr: {
-    light: createCardSet('kr', 'light'),
-    deep: createCardSet('kr', 'deep'),
+    light: buildDeck('kr', 'light'),
+    deep: buildDeck('kr', 'deep'),
   },
   en: {
-    light: createEnglishCardSet('light'),
-    deep: createEnglishCardSet('deep'),
+    light: buildDeck('en', 'light'),
+    deep: buildDeck('en', 'deep'),
   },
+}
+
+/** ID 기준으로 카드 내용만 언어에 맞게 교체 */
+export const remapDeckLanguage = (
+  currentDeck: Card[],
+  language: Language,
+  mode: GameMode,
+): Card[] => {
+  const cardMap = new Map(
+    CARD_DATA[language][mode].map((card) => [card.id, card]),
+  )
+
+  return currentDeck.map((card) => cardMap.get(card.id) ?? card)
 }
