@@ -6,16 +6,15 @@
 [Browser SPA — Vite + Vue 3]
   ├─ Splash / Guide / Game Phase
   ├─ CardGrid + CardModal (풀스크린 질문)
-  ├─ SettingsModal (라이트/딥 모드)
-  └─ MockModal (리뷰 API 대체)
+  └─ SettingsModal (라이트/딥 모드)
         ↓
 [Composables]
   ├─ useGame      — 게임 상태·페이즈·카드 클릭
   ├─ useTimer     — 타이머 시작/일시정지/종료
   └─ useCardShuffle — Fisher-Yates + CSS 애니메이션
         ↓
-[Static Assets]
-  └─ public/img/  — 카드 이미지 (16장 × 모드)
+[Data]
+  └─ questions.ts / cardData.ts — JSON 텍스트 카드
 ```
 
 ## 게임 플로우
@@ -40,8 +39,7 @@ App.vue
 ├── CardModal
 ├── SettingsModal
 ├── GameEndModal
-├── ShopModal
-└── MockModal
+└── ShopModal (타이머 종료 알림)
 ```
 
 ## 원본 vs 포트폴리오
@@ -50,11 +48,12 @@ App.vue
 |--------|------|-----------|
 | View | Vue 2 + jQuery DOM | Vue 3 SFC + Tailwind |
 | State | Options API data | Composition API composables |
-| Review | POST/GET REST API | Mock Modal |
+| 카드 콘텐츠 | 상품 PNG | JSON + CSS |
+| UI 에셋 | PNG 아이콘 | 텍스트·이모지 |
 | Deploy | 회사 서버 | Vercel SPA |
 
 ## 주요 기술 결정
 
 1. **Composables 분리** — 타이머·셔플·게임 로직을 독립 모듈로 분리해 테스트·유지보수 용이
-2. **서버 없는 데모** — 포트폴리오에서 API 없이 전체 UX 체험 가능
+2. **서버 없는 SPA** — 백엔드 없이 전체 게임 UX를 브라우저에서 동작
 3. **TypeScript** — Card, GameMode, MessageSet 등 도메인 타입 명시

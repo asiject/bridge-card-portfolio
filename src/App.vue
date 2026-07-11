@@ -9,7 +9,6 @@ import CardModal from '@/components/CardModal.vue'
 import SettingsModal from '@/components/SettingsModal.vue'
 import GameEndModal from '@/components/GameEndModal.vue'
 import ShopModal from '@/components/ShopModal.vue'
-import MockModal from '@/components/MockModal.vue'
 
 const {
   currentLanguage,
@@ -22,7 +21,6 @@ const {
   showSettingsModal,
   showGameEndModal,
   showShopLinkModal,
-  mockModalType,
   isShuffling,
   messages,
   themeClass,
@@ -39,16 +37,11 @@ const {
   changeLanguage,
   selectMode,
   handleRestart,
-  openMockModal,
-  closeMockModal,
 } = useGame()
-
-const mockModalTitle = computed(() => messages.value.mockReviewTitle)
 
 const isPlaying = computed(() => timer.isPlaying.value)
 const isPaused = computed(() => timer.isPaused.value)
 const isTimeRunningLow = computed(() => timer.isTimeRunningLow.value)
-const timerLogoSrc = computed(() => timer.timerLogoSrc.value)
 const remainingSeconds = computed(() => timer.remainingSeconds.value)
 const minutesInput = computed({
   get: () => timer.minutesInput.value,
@@ -71,11 +64,6 @@ const handleMinutesInput = (value: string) => {
 const handleSecondsInput = (value: string) => {
   timer.secondsInput.value = value
   timer.updateSeconds()
-}
-
-const handleOpenReviewWrite = () => {
-  showSettingsModal.value = false
-  openMockModal('review-write')
 }
 </script>
 
@@ -117,7 +105,6 @@ const handleOpenReviewWrite = () => {
           :is-paused="isPaused"
           :is-shuffling="isShuffling"
           :is-time-running-low="isTimeRunningLow"
-          :timer-logo-src="timerLogoSrc"
           :remaining-seconds="remainingSeconds"
           :minutes-input="minutesInput"
           :seconds-input="secondsInput"
@@ -167,8 +154,6 @@ const handleOpenReviewWrite = () => {
         :mode="mode"
         @close="showSettingsModal = false"
         @select-mode="selectMode"
-        @open-review-write="handleOpenReviewWrite"
-        @open-review-board="openMockModal('review-board')"
       />
     </Transition>
 
@@ -186,15 +171,6 @@ const handleOpenReviewWrite = () => {
         v-if="showShopLinkModal"
         :messages="messages"
         @close="showShopLinkModal = false"
-      />
-    </Transition>
-
-    <Transition name="modal">
-      <MockModal
-        v-if="mockModalType"
-        :messages="messages"
-        :title="mockModalTitle"
-        @close="closeMockModal"
       />
     </Transition>
   </div>

@@ -4,13 +4,11 @@ import type {
   GameMode,
   GamePhase,
   Language,
-  MockModalType,
 } from '@/types/game'
 import { CARD_DATA, remapDeckLanguage } from '@/data/cardData'
 import { MESSAGES } from '@/data/messages'
 import { GAME_CONFIG } from '@/constants/gameConfig'
 import { detectLanguage, getHtmlLang, setLanguage } from '@/utils/language'
-import { preloadImages } from '@/utils/time'
 import { useTimer } from '@/composables/useTimer'
 import { useCardShuffle } from '@/composables/useCardShuffle'
 
@@ -30,7 +28,6 @@ export const useGame = () => {
   const showSettingsModal = ref(false)
   const showGameEndModal = ref(false)
   const showShopLinkModal = ref(false)
-  const mockModalType = ref<MockModalType>(null)
 
   const { isShuffling, shuffleDeck, animateShuffle } = useCardShuffle()
 
@@ -206,14 +203,6 @@ export const useGame = () => {
     timer.isPaused.value = false
   }
 
-  const openMockModal = (type: MockModalType) => {
-    mockModalType.value = type
-  }
-
-  const closeMockModal = () => {
-    mockModalType.value = null
-  }
-
   const handleKeydown = (event: KeyboardEvent) => {
     if (event.key !== 'Escape') return
 
@@ -221,19 +210,11 @@ export const useGame = () => {
     else if (showSettingsModal.value) showSettingsModal.value = false
     else if (showGameEndModal.value) showGameEndModal.value = false
     else if (showShopLinkModal.value) showShopLinkModal.value = false
-    else if (mockModalType.value) closeMockModal()
   }
 
   onMounted(() => {
     applyDocumentLanguage(currentLanguage.value)
     document.addEventListener('keydown', handleKeydown)
-
-    const images = [
-      '/img/logo.png',
-      '/img/timer-green.png',
-      '/img/timer-pink.png',
-    ]
-    preloadImages(images).catch(() => undefined)
 
     if (IS_DEV) {
       setTimeout(skipSplash, GAME_CONFIG.SPLASH_DURATION)
@@ -257,7 +238,6 @@ export const useGame = () => {
     showSettingsModal,
     showGameEndModal,
     showShopLinkModal,
-    mockModalType,
     isShuffling,
     messages,
     themeClass,
@@ -274,7 +254,5 @@ export const useGame = () => {
     changeLanguage,
     selectMode,
     handleRestart,
-    openMockModal,
-    closeMockModal,
   }
 }

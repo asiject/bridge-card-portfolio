@@ -9,7 +9,6 @@ defineProps<{
   isPaused: boolean
   isShuffling: boolean
   isTimeRunningLow: boolean
-  timerLogoSrc: string
   remainingSeconds: number
   minutesInput: string
   secondsInput: string
@@ -45,7 +44,7 @@ const handleShuffleClick = () => {
       aria-label="설정 열기"
       @click="emit('showSettings')"
     >
-      <img src="/img/logo.png" alt="브릿지 카드" class="h-8 w-auto" />
+      <h1 class="text-lg font-bold tracking-tight sm:text-xl">{{ messages.gameTitle }}</h1>
     </button>
 
     <div class="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -53,7 +52,13 @@ const handleShuffleClick = () => {
         class="flex items-center gap-2 rounded-xl px-2 py-1"
         :class="isTimeRunningLow ? 'text-red-500' : ''"
       >
-        <img :src="timerLogoSrc" alt="타이머" class="h-6 w-6" />
+        <span
+          class="text-xl"
+          :class="isTimeRunningLow ? 'text-red-500' : 'text-emerald-600'"
+          aria-hidden="true"
+        >
+          ⏱
+        </span>
         <div v-if="isPlaying" class="min-w-[4rem] text-center font-mono text-lg font-bold">
           {{ formatTime(remainingSeconds) }}
         </div>
@@ -87,44 +92,44 @@ const handleShuffleClick = () => {
       <div class="flex items-center gap-1" :class="{ 'pointer-events-none opacity-40': isShuffling }">
         <button
           type="button"
-          class="rounded-lg p-2 transition hover:bg-black/5 disabled:opacity-40"
+          class="min-w-[2.25rem] rounded-lg px-2 py-2 text-sm font-semibold transition hover:bg-black/5 disabled:opacity-40"
           :disabled="isPlaying && !isPaused"
           :title="playButtonTitle"
           aria-label="시작"
           @click="emit('play')"
         >
-          <img src="/img/play.png" alt="" class="h-6 w-6" />
+          ▶
         </button>
         <button
           type="button"
-          class="rounded-lg p-2 transition hover:bg-black/5 disabled:opacity-40"
+          class="min-w-[2.25rem] rounded-lg px-2 py-2 text-sm font-semibold transition hover:bg-black/5 disabled:opacity-40"
           :disabled="!isPlaying || isPaused"
           :title="messages.pause"
           aria-label="일시정지"
           @click="emit('pause')"
         >
-          <img src="/img/pause.png" alt="" class="h-6 w-6" />
+          ⏸
         </button>
         <button
           type="button"
-          class="rounded-lg p-2 transition hover:bg-black/5 disabled:opacity-40"
+          class="min-w-[2.25rem] rounded-lg px-2 py-2 text-sm font-semibold transition hover:bg-black/5 disabled:opacity-40"
           :disabled="!isPlaying"
           :title="messages.stop"
           aria-label="정지"
           @click="emit('stop')"
         >
-          <img src="/img/stop.png" alt="" class="h-6 w-6" />
+          ⏹
         </button>
         <button
           type="button"
-          class="rounded-lg p-2 transition hover:bg-black/5 disabled:opacity-40"
+          class="min-w-[2.25rem] rounded-lg px-2 py-2 text-sm font-semibold transition hover:bg-black/5 disabled:opacity-40"
           :class="{ 'animate-spin-once': isShuffling }"
           :disabled="isShuffling"
           :title="messages.shuffle"
           aria-label="카드 섞기"
           @click="handleShuffleClick"
         >
-          <img src="/img/shuffle.png" alt="" class="h-6 w-6" />
+          🔀
         </button>
       </div>
 
@@ -153,16 +158,12 @@ const handleShuffleClick = () => {
 
     <button
       type="button"
-      class="shrink-0 rounded-lg p-2 transition hover:bg-black/5"
+      class="shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition hover:bg-black/5"
       :class="{ 'pointer-events-none opacity-40': isShuffling }"
-      aria-label="메뉴"
+      :aria-label="messages.settings"
       @click="emit('showSettings')"
     >
-      <img
-        :src="themeClass === 'theme-light' ? '/img/icon-menu.png' : '/img/icon-menu-deep.png'"
-        alt="메뉴"
-        class="h-6 w-6"
-      />
+      {{ messages.settings }}
     </button>
   </header>
 </template>

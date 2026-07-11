@@ -2,7 +2,7 @@ import type { Language, MessageSet } from '@/types/game'
 
 export const MESSAGES: Record<Language, MessageSet> = {
   kr: {
-    gameTitle: '브릿지 카드 게임',
+    gameTitle: 'Bridge Card',
     play: '시작',
     resume: '재개',
     pause: '일시정지',
@@ -17,12 +17,9 @@ export const MESSAGES: Record<Language, MessageSet> = {
     deepMode: '딥 모드',
     deepModeDesc: '더 깊은',
     deepModeDesc2: '대화',
-    writeReview: '리뷰 작성',
     journeyCompleted: '여정 완료!',
     allCardsCompleted: '모든 카드가 완료되었습니다.',
     timesUp: '시간 종료!',
-    buyBridgeCards: '브릿지 카드 구매',
-    adLabel: '광고',
     clickToStart: '클릭하여 시작',
     gettingToKnowSomeone: '누군가를 알아가는 것은 여정과 같습니다.',
     bridgeConnects: '연결되지 않은 곳을 잇는 다리.',
@@ -33,13 +30,11 @@ export const MESSAGES: Record<Language, MessageSet> = {
     startExcitingJourney2: '흥미진진한 여정을 시작하세요.',
     setTimeAndStart: '시간을 설정하고 게임을 시작하세요!',
     start: '시작',
-    mockReviewTitle: '포트폴리오 데모',
-    mockReviewDesc:
-      '리뷰 작성/조회 기능은 원본 서비스에서 REST API로 제공되었습니다. 현재 포트폴리오 버전에서는 서버 없이 동작하도록 Mock 처리되었습니다.',
     cardBackLabel: '카드',
+    settings: '설정',
   },
   en: {
-    gameTitle: 'Bridge Card Game',
+    gameTitle: 'Bridge Card',
     play: 'Start',
     resume: 'Resume',
     pause: 'Pause',
@@ -54,12 +49,9 @@ export const MESSAGES: Record<Language, MessageSet> = {
     deepMode: 'Deep Mode',
     deepModeDesc: 'Deeper',
     deepModeDesc2: 'conversation',
-    writeReview: 'Write Review',
     journeyCompleted: 'Journey Completed!',
     allCardsCompleted: 'All cards have been completed.',
     timesUp: "Time's up!",
-    buyBridgeCards: 'Buy Bridge Cards',
-    adLabel: 'Ad',
     clickToStart: 'Click to start',
     gettingToKnowSomeone: 'Getting to know someone is like a journey.',
     bridgeConnects: 'A bridge that connects disconnected places.',
@@ -70,9 +62,7 @@ export const MESSAGES: Record<Language, MessageSet> = {
     startExcitingJourney2: 'through Bridge question cards.',
     setTimeAndStart: 'Set the time and start the game!',
     start: 'Start',
-    mockReviewTitle: 'Portfolio Demo',
-    mockReviewDesc:
-      'Review features were powered by a REST API in the original service. This portfolio version runs without a server and uses a mock placeholder instead.',
     cardBackLabel: 'Card',
+    settings: 'Settings',
   },
 }

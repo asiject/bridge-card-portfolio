@@ -26,10 +26,9 @@ const emit = defineEmits<{
       <p class="mb-8 text-gray-600">{{ messages.allCardsCompleted }}</p>
       <button
         type="button"
-        class="inline-flex items-center gap-2 rounded-full bg-bridge-purple px-6 py-3 font-semibold text-white transition hover:bg-bridge-violet"
+        class="rounded-full bg-bridge-purple px-6 py-3 font-semibold text-white transition hover:bg-bridge-violet"
         @click="emit('restart')"
       >
-        <img src="/img/restart.png" alt="" class="h-5 w-5" />
         {{ messages.restart }}
       </button>
     </div>

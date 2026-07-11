@@ -28,16 +28,3 @@ export const debounce = <T extends (...args: never[]) => void>(
   }
 }
 
-export const preloadImages = (imageUrls: string[]): Promise<string[]> => {
-  return Promise.all(
-    imageUrls.map(
-      (url) =>
-        new Promise<string>((resolve, reject) => {
-          const img = new Image()
-          img.onload = () => resolve(url)
-          img.onerror = () => reject(url)
-          img.src = url
-        }),
-    ),
-  )
-}

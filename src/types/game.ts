@@ -4,8 +4,6 @@ export type GameMode = 'light' | 'deep'
 
 export type GamePhase = 'splash' | 'guide' | 'playing'
 
-export type MockModalType = 'review-write' | 'review-board' | null
-
 /** 텍스트 기반 질문 카드 */
 export interface Card {
   id: number
@@ -36,12 +34,9 @@ export interface MessageSet {
   deepMode: string
   deepModeDesc: string
   deepModeDesc2: string
-  writeReview: string
   journeyCompleted: string
   allCardsCompleted: string
   timesUp: string
-  buyBridgeCards: string
-  adLabel: string
   clickToStart: string
   gettingToKnowSomeone: string
   bridgeConnects: string
@@ -52,7 +47,6 @@ export interface MessageSet {
   startExcitingJourney2: string
   setTimeAndStart: string
   start: string
-  mockReviewTitle: string
-  mockReviewDesc: string
   cardBackLabel: string
+  settings: string
 }

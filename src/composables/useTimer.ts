@@ -15,10 +15,6 @@ export const useTimer = (onTimeUp: () => void) => {
     () => remainingSeconds.value <= GAME_CONFIG.LOW_TIME_THRESHOLD && isPlaying.value,
   )
 
-  const timerLogoSrc = computed(() =>
-    isTimeRunningLow.value ? '/img/timer-pink.png' : '/img/timer-green.png',
-  )
-
   const stopTimer = () => {
     if (timerInterval) {
       clearInterval(timerInterval)
@@ -101,7 +97,6 @@ export const useTimer = (onTimeUp: () => void) => {
     isPlaying,
     isPaused,
     isTimeRunningLow,
-    timerLogoSrc,
     formatTime,
     validateInput,
     updateMinutes,
