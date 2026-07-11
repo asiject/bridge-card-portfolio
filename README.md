@@ -5,24 +5,27 @@
 
 ## Live Demo
 
-> Vercel 배포 후 URL을 아래에 추가하세요.
-
-`https://bridge-card-portfolio.vercel.app` _(배포 후 업데이트)_
+**[https://bridge-card.vercel.app](https://bridge-card.vercel.app)**
 
 ## 데모 GIF
 
 ### 8초 — 핵심 플로우
+스플래시 → 가이드 → 카드 플립 → 질문 모달 → 닫기
+
 ![8초 데모](./docs/gifs/demo-8s-optimized.gif)
 
 ### 15초 — 전체 플로우
+카드 플레이 → 딥 모드 전환 → 셔플 애니메이션
+
 ![15초 데모](./docs/gifs/demo-15s-optimized.gif)
 
 ## 포함 내용
 
 | 영역 | 설명 |
 |------|------|
-| 카드 게임 UI | 16장 질문 카드 선택 · 제거 · 풀스크린 보기 (텍스트 JSON) |
-| 게임 로직 | 라이트/딥 모드, 타이머, Fisher-Yates 셔플, 2단계 대화 |
+| 카드 게임 UI | 16장 질문 카드 플립 · 풀스크린 보기 (텍스트 JSON) |
+| 게임 로직 | 라이트/딥 모드, 타이머, 정지 시 셔플, Fisher-Yates + CSS 애니메이션 |
+| 카드 UX | 3D 플립, 선택 잠금, 슬롯 기반 셔플 (중앙 더미 → 순차 펼치기) |
 | 다국어 | 한국어 / English |
 | 서버 기능 | 리뷰 API → Mock Modal (서버 불필요) |
 

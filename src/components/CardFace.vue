@@ -12,7 +12,7 @@ const isModal = props.size === 'modal'
 
 <template>
   <div
-    class="card-face absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-xl border-2 p-3 text-center sm:p-4"
+    class="card-face card-front-face absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-xl border-2 p-3 text-center sm:p-4"
     :class="
       mode === 'light'
         ? 'border-emerald-200 bg-gradient-to-b from-white to-emerald-50 text-gray-800'

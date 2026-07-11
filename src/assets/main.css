@@ -8,45 +8,87 @@
   }
 }
 
-/* 카드 그리드 - 반응형 비율 유지 */
-.card-grid .card {
+/* 카드 슬롯 — 비율만 유지, transform 없음 */
+.card-grid .card-slot {
   padding-bottom: 140%;
-  transform-style: preserve-3d;
 }
 
-/* 카드 뒷면 — 저작권-free CSS 패턴 */
-.theme-light .card-grid .card-back .card-back-face {
+/* 플립 애니메이션은 flipper에만 적용 */
+.card-grid .card-flipper {
+  transform-style: preserve-3d;
+  transition: transform 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-grid .card-flipper.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-grid .card-slot:not(.is-completed):hover .card-flipper {
+  transform: translateY(-4px);
+}
+
+.card-grid .card-slot:not(.is-completed):hover .card-flipper.is-flipped {
+  transform: rotateY(180deg) translateY(-4px);
+}
+
+/* 앞·뒷면 */
+.card-grid .card-back-face,
+.card-grid .card-front-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-grid .card-front-face {
+  transform: rotateY(180deg);
+}
+
+/* 카드 뒷면 배경 */
+.theme-light .card-grid .card-back-face {
   @apply bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900;
 }
 
-.theme-deep .card-grid .card-back .card-back-face {
+.theme-deep .card-grid .card-back-face {
   @apply bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900;
 }
 
-.card-grid .card-back .card-back-face::after {
+.card-grid .card-back-face::after {
   content: '';
   @apply absolute inset-0 rounded-xl opacity-20;
   background: radial-gradient(circle at 30% 30%, white 0%, transparent 60%);
 }
 
-.card-grid .card.flipping {
-  animation: cardFlip 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.card-grid .card-slot.is-completed {
+  @apply opacity-70;
 }
 
-.card-grid.shuffling .card {
+.card-grid.shuffling .card-slot {
   pointer-events: none;
 }
 
-.card-focused .card.blurred {
-  @apply pointer-events-none opacity-30 blur-sm;
+.card-grid.is-interaction-locked .card-slot {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* 카드 포커스 시 게임 배경 — 색상만 변경 (scale 없음) */
+.game-container.card-focused::before {
+  content: '';
+  @apply pointer-events-none fixed inset-0 z-10;
+  background: rgba(0, 0, 0, 0.35);
+  transition: background-color 0.3s ease;
+}
+
+.card-grid .card-slot.is-blurred {
+  @apply pointer-events-none opacity-30;
   filter: blur(4px);
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-/* Vue Transition */
+/* Vue Transition — 배경/페이드는 scale 제외 */
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fade-enter-from,
@@ -57,25 +99,12 @@
 
 .modal-enter-active,
 .modal-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
-  transform: scale(0.9);
-}
-
-@keyframes cardFlip {
-  0% {
-    transform: rotateY(0deg);
-  }
-  50% {
-    transform: rotateY(90deg);
-  }
-  100% {
-    transform: rotateY(180deg);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

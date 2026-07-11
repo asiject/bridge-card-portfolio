@@ -31,8 +31,12 @@ const convertToGif = (inputPath, outputPath, durationSec, fps = 12, width = 960)
   ], { stdio: 'inherit' })
 }
 
+const clickFirstCard = async (page) => {
+  await page.locator('.card-slot').first().click()
+}
+
 const runShortDemo = async (page) => {
-  // 8초 버전: 시작 → 카드 클릭 → 질문 보기 → 닫기
+  // 8초: 스플래시 → 가이드 → 게임 → 카드 플립·모달 → 닫기
   await page.goto(BASE_URL, { waitUntil: 'networkidle' })
   await wait(600)
 
@@ -45,15 +49,15 @@ const runShortDemo = async (page) => {
   await page.getByLabel('시작').first().click()
   await wait(800)
 
-  await page.locator('.card').first().click()
-  await wait(2000)
+  await clickFirstCard(page)
+  await wait(2200)
 
   await page.getByLabel('닫기').click()
   await wait(1200)
 }
 
 const runFullDemo = async (page) => {
-  // 15초 버전: 전체 플로우 + 모드 전환
+  // 15초: 카드 플레이 + 설정 + 딥 모드 + 셔플
   await page.goto(BASE_URL, { waitUntil: 'networkidle' })
   await wait(600)
 
@@ -66,7 +70,7 @@ const runFullDemo = async (page) => {
   await page.getByLabel('시작').first().click()
   await wait(700)
 
-  await page.locator('.card').first().click()
+  await clickFirstCard(page)
   await wait(1800)
   await page.getByLabel('닫기').click()
   await wait(600)
@@ -75,12 +79,10 @@ const runFullDemo = async (page) => {
   await wait(800)
 
   await page.getByRole('button', { name: /딥 모드|Deep Mode/i }).click()
-  await wait(1500)
+  await wait(2500)
 
-  await page.locator('.card').nth(1).click()
-  await wait(2000)
-  await page.getByLabel('닫기').click()
-  await wait(1000)
+  await page.getByLabel('카드 섞기').click()
+  await wait(4500)
 }
 
 const recordDemo = async (name, runFlow, durationSec) => {
@@ -127,7 +129,6 @@ const recordDemo = async (name, runFlow, durationSec) => {
 const main = async () => {
   mkdirSync(OUTPUT_DIR, { recursive: true })
 
-  // 이전 webm 잔여 파일 정리
   readdirSync(OUTPUT_DIR)
     .filter((file) => file.endsWith('.webm'))
     .forEach((file) => unlinkSync(join(OUTPUT_DIR, file)))

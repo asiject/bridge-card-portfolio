@@ -18,6 +18,7 @@ const {
   deck,
   selectedCard,
   isCardFocused,
+  isCardSelecting,
   showSettingsModal,
   showGameEndModal,
   showShopLinkModal,
@@ -31,6 +32,7 @@ const {
   startGuide,
   handlePlay,
   handleShuffle,
+  handleStop,
   handleCardClick,
   closeCard,
   isCardFlipped,
@@ -125,7 +127,7 @@ const handleOpenReviewWrite = () => {
           @change-language="changeLanguage"
           @play="handlePlay"
           @pause="timer.pauseGame"
-          @stop="timer.stopGame"
+          @stop="handleStop"
           @shuffle="handleShuffle"
           @update:minutes-input="handleMinutesInput"
           @update:seconds-input="handleSecondsInput"
@@ -139,6 +141,7 @@ const handleOpenReviewWrite = () => {
             :card-back-label="messages.cardBackLabel"
             :is-shuffling="isShuffling"
             :is-card-focused="isCardFocused"
+            :is-card-selecting="isCardSelecting"
             :selected-card-id="selectedCard?.id ?? null"
             :is-flipped="isCardFlipped"
             @card-click="handleCardClick"

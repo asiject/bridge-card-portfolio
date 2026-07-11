@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import type {
   Card,
   GameMode,
@@ -25,6 +25,8 @@ export const useGame = () => {
   const selectedCard = ref<Card | null>(null)
   const isModalOpen = ref(false)
   const isCardFocused = ref(false)
+  const isCardSelecting = ref(false)
+  let cardSelectTimer: ReturnType<typeof setTimeout> | null = null
   const showSettingsModal = ref(false)
   const showGameEndModal = ref(false)
   const showShopLinkModal = ref(false)
@@ -64,12 +66,27 @@ export const useGame = () => {
     timer.resetTimer()
   }
 
+  const clearCardSelectTimer = () => {
+    if (!cardSelectTimer) return
+    clearTimeout(cardSelectTimer)
+    cardSelectTimer = null
+  }
+
   const runShuffleAnimation = async () => {
-    const originalCards = [...currentCardData.value[mode.value]]
-    await animateShuffle(deck, originalCards, (shuffled) => {
+    if (flippedCards.value.size > 0) {
       flippedCards.value = new Set()
-      deck.value = shuffled
-    })
+      await nextTick()
+      await new Promise((resolve) => setTimeout(resolve, GAME_CONFIG.CARD_FLIP_DURATION_MS))
+    }
+
+    await animateShuffle(
+      deck,
+      (shuffled) => {
+        flippedCards.value = new Set()
+        deck.value = shuffled
+      },
+      () => shuffleDeck([...currentCardData.value[mode.value]]),
+    )
   }
 
   const handlePlay = () => {
@@ -103,24 +120,45 @@ export const useGame = () => {
     document.body.style.overflow = 'hidden'
   }
 
-  const closeCard = () => {
+  const dismissCardModal = () => {
+    clearCardSelectTimer()
+    isCardSelecting.value = false
     selectedCard.value = null
     isModalOpen.value = false
     isCardFocused.value = false
     document.body.style.overflow = ''
+  }
+
+  const handleStop = () => {
+    if (isShuffling.value) return
+
+    dismissCardModal()
+    timer.stopGame()
+    runShuffleAnimation()
+  }
+
+  const closeCard = () => {
+    dismissCardModal()
     checkJourneyCompletion()
   }
 
   const handleCardClick = (card: Card) => {
-    if (isShuffling.value || isModalOpen.value) return
+    if (isShuffling.value || isModalOpen.value || isCardSelecting.value) return
 
     if (isCardFlipped(card.id)) {
       showCardInCenter(card)
       return
     }
 
+    isCardSelecting.value = true
     flipCard(card.id)
-    setTimeout(() => showCardInCenter(card), 300)
+
+    clearCardSelectTimer()
+    cardSelectTimer = setTimeout(() => {
+      cardSelectTimer = null
+      showCardInCenter(card)
+      isCardSelecting.value = false
+    }, GAME_CONFIG.CARD_FLIP_DURATION_MS)
   }
 
   const checkJourneyCompletion = () => {
@@ -203,6 +241,7 @@ export const useGame = () => {
   })
 
   onUnmounted(() => {
+    clearCardSelectTimer()
     document.removeEventListener('keydown', handleKeydown)
     document.body.style.overflow = ''
   })
@@ -214,6 +253,7 @@ export const useGame = () => {
     deck,
     selectedCard,
     isCardFocused,
+    isCardSelecting,
     showSettingsModal,
     showGameEndModal,
     showShopLinkModal,
@@ -227,6 +267,7 @@ export const useGame = () => {
     startGuide,
     handlePlay,
     handleShuffle,
+    handleStop,
     handleCardClick,
     closeCard,
     isCardFlipped,
