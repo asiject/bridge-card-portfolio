@@ -5,7 +5,7 @@
 
 ## Live Demo
 
-**[https://bridge-card.vercel.app](https://bridge-card.vercel.app)**
+**[https://bridge-card-portfolio.vercel.app](https://bridge-card-portfolio.vercel.app)**
 
 ## 데모 GIF
 
