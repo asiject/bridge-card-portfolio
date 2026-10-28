@@ -3,6 +3,13 @@
 > 코로나19 비대면 시기, 회사에서 운영하던 **ZOOM 아이스브레이킹 카드 게임**을 포트폴리오용으로 재구성했습니다.
 > 원본은 회사 내부 서비스이며, 현재는 운영하지 않아서 **프론트엔드 데모·기술 패턴 공개** 목적의 sanitized 버전입니다.
 
+## 이력서 문장
+
+- 비대면 ZOOM 화면 공유용 아이스브레이킹 카드 도구를 Vue 3·TypeScript로 재구성하고, 플립·라이트/딥 모드·타이머·셔플을 Composition API로 구현했습니다.
+- 저작권 이미지를 뺀 텍스트 카드 UI와 한/영 전환을 Vercel 데모로 공개했습니다.
+
+Live: https://bridge-card-portfolio.vercel.app
+
 ## Live Demo
 
 **[https://bridge-card-portfolio.vercel.app](https://bridge-card-portfolio.vercel.app)**
